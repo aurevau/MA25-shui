@@ -1,0 +1,13 @@
+useDotenv: true
+
+org: ${env:AWS_ORG}
+service: MA25-shui
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  architecture: arm64
+  region: eu-north-1
+  iam: 
+    role: ${env:AWS_ROLE}
+
