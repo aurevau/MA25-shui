@@ -11,7 +11,7 @@ provider:
   iam: 
     role: ${env:AWS_ROLE}
   environment: 
-    TABLE_NAME: MA25-shui 
+    TABLE_NAME: ${env:TABLE_NAME}
 
 resources:
   Resources:
