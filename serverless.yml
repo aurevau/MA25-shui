@@ -53,3 +53,8 @@ functions:
     handler: src/handlers/auth/login.handler
     events:
       - httpApi: { method: POST, path: /auth/login }
+
+  createPost:
+    handler: src/handlers/posts/create-post.handler
+    events:
+      - httpApi: { method: POST, path: /posts }
