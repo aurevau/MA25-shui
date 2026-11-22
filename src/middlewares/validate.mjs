@@ -9,15 +9,19 @@ const parse = (schema, data) => {
     return result.data;
 };
 
-export const validate = (schema) => ({
+export const validate = (schema, source = 'body') => ({
     before: async (handler) => {
         const { event } = handler;
         let data;
 
-        try {
-            data = JSON.parse(event.body ?? '');
-        } catch {
-            throw createError(400, 'Request body must be valid JSON');
+        if (source === 'query') {
+            data = event.queryStringParameters ?? {};
+        } else {
+            try {
+                data = JSON.parse(event.body ?? '');
+            } catch {
+                throw createError(400, 'Request body must be valid JSON');
+            }
         }
 
         event.input = parse(schema, data);

@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import * as posts from '../repositores/posts.mjs';
 import { generateGuestName } from '../utils/guest-name.mjs';
+import { createError } from '@middy/util';
 
 export const createPost = async ({ title, content }, user) => {
     const now = new Date().toISOString();
@@ -16,3 +17,11 @@ export const createPost = async ({ title, content }, user) => {
     await posts.createPost(post);
     return { message: 'Post created successfully', post };
 };
+
+export const listPosts = (username) => posts.listPosts(username);
+
+export const getPost = async (postId) => {
+    const post = await posts.getPost(postId);
+    if (!post) throw createError(404, 'Post not found');
+    return post;
+}
