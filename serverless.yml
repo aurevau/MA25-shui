@@ -8,33 +8,34 @@ provider:
   runtime: nodejs24.x
   architecture: arm64
   region: eu-north-1
-  iam: 
+  iam:
     role: ${env:AWS_ROLE}
-  environment: 
+  environment:
     TABLE_NAME: ${env:TABLE_NAME}
+    JWT_SECRET: ${env:JWT_SECRET}
 
 resources:
   Resources:
-    ShuiTable: 
-      Type: AWS::DynamoDB::Table 
+    ShuiTable:
+      Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:provider.environment.TABLE_NAME}
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
-          - { AttributeName: PK, AttributeType: S } 
+          - { AttributeName: PK, AttributeType: S }
           - { AttributeName: SK, AttributeType: S }
           - { AttributeName: GSI1PK, AttributeType: S }
           - { AttributeName: GSI1SK, AttributeType: S }
           - { AttributeName: GSI2PK, AttributeType: S }
           - { AttributeName: GSI2SK, AttributeType: S }
-        KeySchema: 
+        KeySchema:
           - { AttributeName: PK, KeyType: HASH }
           - { AttributeName: SK, KeyType: RANGE }
         GlobalSecondaryIndexes:
           - IndexName: GSI1
             KeySchema:
               - { AttributeName: GSI1PK, KeyType: HASH }
-              - {AttributeName: GSI1SK, KeyType: RANGE }
+              - { AttributeName: GSI1SK, KeyType: RANGE }
             Projection: { ProjectionType: ALL }
           - IndexName: GSI2
             KeySchema:
@@ -42,9 +43,13 @@ resources:
               - { AttributeName: GSI2SK, KeyType: RANGE }
             Projection: { ProjectionType: ALL }
 
-
-functions: 
-  register: 
+functions:
+  register:
     handler: src/handlers/auth/register.handler
-    events: 
+    events:
       - httpApi: { method: POST, path: /auth/register }
+
+  login:
+    handler: src/handlers/auth/login.handler
+    events:
+      - httpApi: { method: POST, path: /auth/login }
