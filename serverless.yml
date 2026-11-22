@@ -58,3 +58,13 @@ functions:
     handler: src/handlers/posts/create-post.handler
     events:
       - httpApi: { method: POST, path: /posts }
+
+  listPosts:
+    handler: src/handlers/posts/list-posts.handler
+    events:
+      - httpApi: { method: GET, path: /posts }
+
+  getPost:
+    handler: src/handlers/posts/get-post.handler
+    events:
+      - httpApi: { method: GET, path: "/posts/{postId}" }
