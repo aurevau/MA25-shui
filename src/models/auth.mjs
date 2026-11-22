@@ -15,3 +15,8 @@ export const registerSchema = z.object({
             'Ditt lösenord måste innehålla minst en stor bokstav, en liten bokstav, en siffra och ett specialtecken'
         )
 });
+
+export const loginSchema = z.object({
+    username: z.string().min(1, 'Användarnamn krävs'),
+    password: z.string().min(1, 'Lösenord krävs'),
+});

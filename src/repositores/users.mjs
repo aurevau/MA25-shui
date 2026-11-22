@@ -1,4 +1,4 @@
-import { PutCommand } from "@aws-sdk/lib-dynamodb";
+import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { db, TABLE } from './db.mjs';
 
 // Returns false if username already exists 
@@ -23,3 +23,16 @@ export const createUser = async ({ username, passwordHash }) => {
         throw error;
     }
 };
+
+export const getUser = async (username) => {
+    const { Item } = await db.send(
+        new GetCommand({
+            TableName: TABLE,
+            Key: {
+                PK: `USER#${username}`,
+                SK: 'PROFILE'
+            }
+        })
+    );
+    return Item ?? null;
+}
