@@ -42,6 +42,9 @@ resources:
               - { AttributeName: GSI2SK, KeyType: RANGE }
             Projection: { ProjectionType: ALL }
 
-              
-              
-         
+
+functions: 
+  register: 
+    handler: src/handlers/auth/register.handler
+    events: 
+      - httpApi: { method: POST, path: /auth/register }
