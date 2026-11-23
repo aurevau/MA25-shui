@@ -21,3 +21,11 @@ export const authenticateOptional = () => ({
         handler.event.user = getUser(handler.event);
     }
 });
+
+export const authenticate = () => ({
+    before: (handler) => {
+        const user = getUser(handler.event);
+        if (!user) throw createError(401, 'Token is missing');
+        handler.event.user = user;
+    },
+});
