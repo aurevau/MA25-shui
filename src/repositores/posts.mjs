@@ -41,6 +41,14 @@ export const getPost = async (id) => {
     return Item ? toPost(Item) : null;
 }
 
+export const getRawPost = async (id) => {
+    const { Item } = await db.send(new GetCommand({
+        TableName: TABLE,
+        Key: key(id)
+    }));
+    return Item ?? null;
+};
+
 export const listPosts = async (username) => {
     const index = username
         ? { IndexName: 'GSI2', pk: 'GSI2PK', value: `USER#${username}` }
@@ -57,3 +65,11 @@ export const listPosts = async (username) => {
     );
     return Items.map(toPost);
 }
+
+export const updatePost = async (post) => {
+    await db.send(new PutCommand({
+        TableName: TABLE,
+        Item: post
+    }));
+    return toPost(post);
+};
