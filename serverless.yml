@@ -68,3 +68,8 @@ functions:
     handler: src/handlers/posts/get-post.handler
     events:
       - httpApi: { method: GET, path: "/posts/{postId}" }
+
+  updatePost:
+    handler: src/handlers/posts/update-post.handler
+    events: 
+      - httpApi: { method: PUT, path: '/posts/{postId}' }
