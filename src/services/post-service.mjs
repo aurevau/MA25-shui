@@ -24,4 +24,11 @@ export const getPost = async (postId) => {
     const post = await posts.getPost(postId);
     if (!post) throw createError(404, 'Post not found');
     return post;
-}
+};
+
+export const updatePost = async (post, { title, content }) =>
+    posts.updatePost({
+        ...post, title, content, updatedAt: new Date().toISOString()
+    });
+
+
