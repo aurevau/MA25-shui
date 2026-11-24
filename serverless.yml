@@ -71,5 +71,10 @@ functions:
 
   updatePost:
     handler: src/handlers/posts/update-post.handler
-    events: 
-      - httpApi: { method: PUT, path: '/posts/{postId}' }
+    events:
+      - httpApi: { method: PUT, path: "/posts/{postId}" }
+
+  deletePost:
+    handler: src/handlers/posts/delete-post.handler
+    events:
+      - httpApi: { method: DELETE, path: "/posts/{postId}" }

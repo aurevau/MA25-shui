@@ -32,3 +32,6 @@ export const updatePost = async (post, { title, content }) =>
     });
 
 
+export const deletePost = async (postId) => {
+    await posts.deletePostWithComments(postId);
+};
