@@ -13,4 +13,9 @@ export const createComment = async (postId, { content }, user) => {
     };
     await commentRepository.createComment(comment);
     return { message: 'Comment created successfully', comment };
+};
+
+export const getComments = async (postId) => {
+    await getPost(postId);
+    return commentRepository.getComments(postId);
 }
