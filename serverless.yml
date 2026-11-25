@@ -1,0 +1,90 @@
+useDotenv: true
+
+org: ${env:AWS_ORG}
+service: MA25-shui
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  architecture: arm64
+  region: eu-north-1
+  iam:
+    role: ${env:AWS_ROLE}
+  environment:
+    TABLE_NAME: ${env:TABLE_NAME}
+    JWT_SECRET: ${env:JWT_SECRET}
+
+resources:
+  Resources:
+    ShuiTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.TABLE_NAME}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - { AttributeName: PK, AttributeType: S }
+          - { AttributeName: SK, AttributeType: S }
+          - { AttributeName: GSI1PK, AttributeType: S }
+          - { AttributeName: GSI1SK, AttributeType: S }
+          - { AttributeName: GSI2PK, AttributeType: S }
+          - { AttributeName: GSI2SK, AttributeType: S }
+        KeySchema:
+          - { AttributeName: PK, KeyType: HASH }
+          - { AttributeName: SK, KeyType: RANGE }
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - { AttributeName: GSI1PK, KeyType: HASH }
+              - { AttributeName: GSI1SK, KeyType: RANGE }
+            Projection: { ProjectionType: ALL }
+          - IndexName: GSI2
+            KeySchema:
+              - { AttributeName: GSI2PK, KeyType: HASH }
+              - { AttributeName: GSI2SK, KeyType: RANGE }
+            Projection: { ProjectionType: ALL }
+
+functions:
+  register:
+    handler: src/handlers/auth/register.handler
+    events:
+      - httpApi: { method: POST, path: /auth/register }
+
+  login:
+    handler: src/handlers/auth/login.handler
+    events:
+      - httpApi: { method: POST, path: /auth/login }
+
+  createPost:
+    handler: src/handlers/posts/create-post.handler
+    events:
+      - httpApi: { method: POST, path: /posts }
+
+  listPosts:
+    handler: src/handlers/posts/list-posts.handler
+    events:
+      - httpApi: { method: GET, path: /posts }
+
+  getPost:
+    handler: src/handlers/posts/get-post.handler
+    events:
+      - httpApi: { method: GET, path: "/posts/{postId}" }
+
+  updatePost:
+    handler: src/handlers/posts/update-post.handler
+    events:
+      - httpApi: { method: PUT, path: "/posts/{postId}" }
+
+  deletePost:
+    handler: src/handlers/posts/delete-post.handler
+    events:
+      - httpApi: { method: DELETE, path: "/posts/{postId}" }
+
+  createComment:
+    handler: src/handlers/comments/create-comment.handler
+    events:
+      - httpApi: { method: POST, path: "/posts/{postId}/comments" }
+
+  getComments:
+    handler: src/handlers/comments/get-comments.handler
+    events:
+      - httpApi: { method: GET, path: "/posts/{postId}/comments" }
