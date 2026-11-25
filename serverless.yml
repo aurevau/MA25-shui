@@ -78,3 +78,8 @@ functions:
     handler: src/handlers/posts/delete-post.handler
     events:
       - httpApi: { method: DELETE, path: "/posts/{postId}" }
+
+  createComment:
+    handler: src/handlers/comments/create-comment.handler
+    events:
+      - httpApi: { method: POST, path: "/posts/{postId}/comments" }
