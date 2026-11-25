@@ -26,10 +26,14 @@ export const getPost = async (postId) => {
     return post;
 };
 
-export const updatePost = async (post, { title, content }) =>
-    posts.updatePost({
+export const updatePost = async (post, { title, content }) => {
+    const updated = await posts.updatePost({
         ...post, title, content, updatedAt: new Date().toISOString()
     });
+
+    return { message: 'Post updated successfully', post: updated };
+};
+
 
 
 export const deletePost = async (postId) => {
