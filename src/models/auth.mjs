@@ -4,19 +4,19 @@ export const registerSchema = z.object({
     username: z
         .string()
         .trim()
-        .min(6, 'Ditt användarnamn måste bestå av minst 6 tecken')
-        .max(15, 'Ditt användarnamn får som mest innehålla 15 tecken'),
+        .min(6, 'Username must be at least 6 characters')
+        .max(15, 'Username must be at most 15 characters'),
     password: z
         .string()
-        .min(8, 'Ditt lösenord måste innehålla minst 8 tecken')
-        .max(72, 'Ditt lösenord får som mest innehålla 72 tecken')
+        .min(8, 'Password must be at least 8 characters')
+        .max(72, 'Password must be at most 72 characters')
         .regex(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            'Ditt lösenord måste innehålla minst en stor bokstav, en liten bokstav, en siffra och ett specialtecken'
+            'Password must contain an uppercase letter, a lowercase letter, a digit and a special character'
         )
 });
 
 export const loginSchema = z.object({
-    username: z.string().min(1, 'Användarnamn krävs'),
-    password: z.string().min(1, 'Lösenord krävs'),
+    username: z.string().min(1, 'Username is required'),
+    password: z.string().min(1, 'Password is required'),
 });
