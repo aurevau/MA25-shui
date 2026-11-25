@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import * as posts from '../repositores/posts-repository.mjs';
+import * as posts from '../repositories/posts-repository.mjs';
 import { generateGuestName } from '../utils/guest-name.mjs';
 import { createError } from '@middy/util';
 
