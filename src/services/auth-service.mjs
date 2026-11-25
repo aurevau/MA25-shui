@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { createError } from "@middy/util";
-import * as users from '../repositores/users.mjs';
+import * as users from '../repositories/users-repository.mjs';
 import { signToken } from "../utils/jwt.mjs";
 
 export const register = async ({ username, password }) => {
