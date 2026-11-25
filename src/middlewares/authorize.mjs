@@ -1,5 +1,5 @@
 import { createError } from "@middy/util";
-import { getRawPost } from "../repositores/posts.mjs";
+import { getRawPost } from "../repositores/posts-repository.mjs";
 
 export const authorizePostOwner = () => ({
     before: async ({ event }) => {
