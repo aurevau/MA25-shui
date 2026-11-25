@@ -83,3 +83,8 @@ functions:
     handler: src/handlers/comments/create-comment.handler
     events:
       - httpApi: { method: POST, path: "/posts/{postId}/comments" }
+
+  getComments:
+    handler: src/handlers/comments/get-comments.handler
+    events:
+      - httpApi: { method: GET, path: "/posts/{postId}/comments" }
