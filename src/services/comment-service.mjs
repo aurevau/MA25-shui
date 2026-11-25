@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import * as commentRepository from "../repositores/comments.mjs";
+import * as commentRepository from "../repositores/comments-repository.mjs";
 import { getPost } from "./post-service.mjs";
 
 export const createComment = async (postId, { content }, user) => {
